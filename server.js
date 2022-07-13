@@ -20,7 +20,6 @@ const db = mysql.createConnection(
         password: 'Amuse-Pastry-Secret-Yellow-2',
         database: 'election'
     },
-    console.log('Connected to the election database.')
 );
 
 app.get('/api/parties', (req, res) => {
@@ -192,20 +191,16 @@ app.post('/api/candidates/', ({ body }, res) => {
         });
     });
 });
-// const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected)
-//                 VALUES (?,?,?,?)`;
-// const params = [1, 'Ronald', 'Firbank', 1];
-
-// 
-//     console.log(result);
-// });
-
 
 // Default reponse for any other request (Not Found)
 app.use((req, res) => {
     res.status(404).end();
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+db.connect(err => {
+    if (err) throw err;
+    console.log('Database connected.');
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
 });
